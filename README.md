@@ -10,6 +10,10 @@ Jump to [What's new in 3.3.1?](#changelog)
 
 A boilerplate for **Node.js** web applications.
 
+** Forked changes: **
+
+- Moved routes to `config/routes.js`
+
 If you have attended any hackathons in the past, then you know how much time it takes to
 get a project started: decide on what to build, pick a programming language, pick a web framework,
 pick a CSS framework. A while later, you might have an initial project up on GitHub and only then
