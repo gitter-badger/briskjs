@@ -1,5 +1,5 @@
 ![Alt](https://lh4.googleusercontent.com/-PVw-ZUM9vV8/UuWeH51os0I/AAAAAAAAD6M/0Ikg7viJftQ/w1286-h566-no/hackathon-starter-logo.jpg)
-Hackathon Starter [![Dependency Status](https://david-dm.org/sahat/hackathon-starter/status.svg?style=flat)](https://david-dm.org/sahat/hackathon-starter) [![Build Status](https://img.shields.io/travis/sahat/hackathon-starter.svg?style=flat)](https://travis-ci.org/sahat/hackathon-starter) [![Analytics](https://ga-beacon.appspot.com/UA-47447818-2/hackathon-starter?pixel)](https://github.com/igrigorik/ga-beacon)
+Brisk.js [![Dependency Status](https://david-dm.org/sahat/hackathon-starter/status.svg?style=flat)](https://david-dm.org/sahat/hackathon-starter) [![Build Status](https://img.shields.io/travis/sahat/hackathon-starter.svg?style=flat)](https://travis-ci.org/sahat/hackathon-starter) [![Analytics](https://ga-beacon.appspot.com/UA-47447818-2/hackathon-starter?pixel)](https://github.com/igrigorik/ga-beacon)
 =======================
 
 [![Join the chat at https://gitter.im/sahat/hackathon-starter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/hackathon-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Thinkful Pair on Node](https://tf-assets-staging.s3.amazonaws.com/badges/thinkful_repo_badge.svg)](http://start.thinkful.com/node/)
@@ -13,6 +13,8 @@ A boilerplate for **Node.js** web applications.
 ** Forked changes: **
 
 - Moved routes to `config/routes.js`
+- Added Gulp asset pipeline
+- Added CORS support
 
 If you have attended any hackathons in the past, then you know how much time it takes to
 get a project started: decide on what to build, pick a programming language, pick a web framework,
@@ -69,7 +71,7 @@ Features
 - Flash notifications
 - MVC Project Structure
 - Node.js clusters support
-- Sass stylesheets (auto-compiled via middleware)
+- Gulp Asset Pipeline (Stylus & Babel + Browserify support)
 - Bootstrap 3 + Extra Themes
 - Contact Form (powered by Mailgun, Sendgrid or Mandrill)
 - **Account Management**
@@ -115,7 +117,7 @@ cd myproject
 # Install NPM dependencies
 npm install
 
-node app.js
+npm start
 ```
 
 **Note:** I highly recommend installing [Nodemon](https://github.com/remy/nodemon).
@@ -369,6 +371,7 @@ List of Packages
 | cheerio                         | Scrape web pages using jQuery-style syntax.                           |
 | clockwork                       | Clockwork SMS API library.                                            |
 | connect-mongo                   | MongoDB session store for Express.                                    |
+| [cors](https://github.com/expressjs/cors)							   | Enable Cross Origin Resource Sharing (CORS) with various options      |
 | express                         | Node.js web framework.                                                |
 | body-parser                     | Express 4 middleware.                                                 |
 | cookie-parser                   | Express 4 middleware.                                                 |
@@ -390,7 +393,7 @@ List of Packages
 | mongoose                        | MongoDB ODM.                                                          |
 | node-foursquare                 | Foursquare API library.                                               |
 | node-linkedin                   | LinkedIn API library.                                                 |
-| node-sass-middleware            | Sass middleware compiler.                                                 |
+| node-sass-middleware            | Sass middleware compiler.                                             |
 | nodemailer                      | Node.js library for sending emails.                                   |
 | passport                        | Simple and elegant authentication library for node.js                 |
 | passport-facebook               | Sign-in with Facebook plugin.                                         |
@@ -403,6 +406,7 @@ List of Packages
 | passport-oauth                  | Allows you to set up your own OAuth 1.0a and OAuth 2.0 strategies.    |
 | paypal-rest-sdk                 | PayPal APIs library.                                                  |
 | request                         | Simplified HTTP request library.                                      |
+| simple-pjax					   | Zero-configuration PJAX for typical websites                          |
 | stripe                          | Offical Stripe API library.                                           |
 | tumblr.js                       | Tumblr API library.                                                   |
 | twilio                          | Twilio API library.                                                   |
