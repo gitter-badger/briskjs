@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var express = require('express');
+var httpProxy = require('http-proxy');
 var cookieParser = require('cookie-parser');
 var compress = require('compression');
 var favicon = require('serve-favicon');
@@ -20,7 +21,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var expressValidator = require('express-validator');
 
-
 /**
  * API keys.
  */
@@ -30,6 +30,7 @@ var secrets = require('./../config/secrets');
  * Create Express server.
  */
 var app = express();
+var proxy = httpProxy.createProxyServer();
 
 /**
  * Connect to MongoDB.
@@ -81,6 +82,22 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(path.join(__dirname, '../public'), { maxAge: 31557600000 }));
 
+// We only want to run the asset workflow when not in production
+if (app.get('env') === 'development') {
+  // We require the bundler inside the if block because
+  // it is only needed in a development environment. Later
+  // you will see why this is a good idea
+  var bundle = require('../config/bundle.js');
+  bundle();
+
+  // Any requests to localhost:3000/scripts are proxied to webpack-dev-server
+  app.all('/scripts/*', function (req, res) {
+    proxy.web(req, res, {
+        target: 'http://localhost:8080'
+    });
+  });
+
+}
 
 /**
  * Routes.
@@ -92,6 +109,12 @@ require('./../config/routes')(app, passport)
  * Error Handler.
  */
 app.use(errorHandler());
+
+// It is important to catch any errors from the proxy or the server will crash. An example of this is connecting to the
+// server when webpack is bundling
+proxy.on('error', function(e) {
+  console.log('Could not connect to proxy, please try again...');
+});
 
 /**
  * Start Express server.
