@@ -34,24 +34,15 @@ var config = {
     publicPath: '/scripts/'
   },
   module: {
-
     loaders: [
 
-      // I highly recommend using the babel-loader as it gives you
-      // ES6/7 syntax and JSX transpiling out of the box
+      // I highly recommend using the babel-loader as it gives you ES6/7 syntax and JSX transpiling out of the box
+      // if you want to use React for example.
       {
         test: /\.js$/,
         loader: 'babel',
         exclude: [nodeModulesPath]
-      },
-
-      // Let us also add the style-loader and css-loader, which you can
-      // expand with less-loader etc.
-      {
-        test: /\.css$/,
-        loader: 'style!css'
       }
-
     ]
   },
 

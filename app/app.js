@@ -21,6 +21,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var expressValidator = require('express-validator');
 
+
 /**
  * API keys.
  */
@@ -45,7 +46,11 @@ mongoose.connection.on('error', function() {
  * Express configuration.
  */
 app.set('host', process.env.HOST || 'localhost');
-app.set('port', process.env.PORT || 3000);
+if (app.get('env') === 'development') {
+  app.set('port', process.env.PORT || 4000);
+} else {
+  app.set('port', process.env.PORT || 3000);
+}
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(compress());
@@ -84,9 +89,14 @@ app.use(express.static(path.join(__dirname, '../public'), { maxAge: 31557600000 
 
 // We only want to run the asset workflow when not in production
 if (app.get('env') === 'development') {
-  // We require the bundler inside the if block because
-  // it is only needed in a development environment. Later
-  // you will see why this is a good idea
+
+  // Compile styles with Gulp
+  var gulp = require('gulp');
+  require('../gulpfile');
+  console.log('Running Gulp...');
+  gulp.start('default');
+
+  // Compile client JS with Webpack
   var bundle = require('../config/bundle.js');
   bundle();
 
@@ -119,8 +129,30 @@ proxy.on('error', function(e) {
 /**
  * Start Express server.
  */
-app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on http://%s:%d in %s mode', app.get('host'), app.get('port'), app.get('env'));
 });
+
+// this function is called when you want the server to die gracefully
+// i.e. wait for existing connections
+var gracefulShutdown = function() {
+  console.log("Received kill signal, shutting down Express gracefully.");
+  server.close(function() {
+    console.log("Closed out remaining connections.");
+    process.exit()
+  });
+  
+   // if after 
+   setTimeout(function() {
+    console.error("Could not close connections in time, forcefully shutting down");
+    process.exit()
+  }, 10*1000);
+}
+
+// listen for TERM signal .e.g. kill 
+process.on ('SIGTERM', gracefulShutdown);
+
+// listen for INT signal e.g. Ctrl-C
+process.on ('SIGINT', gracefulShutdown);
 
 module.exports = app;
