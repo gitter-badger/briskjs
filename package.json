@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node app/app.js",
     "dev": "node app/app.js",
-    "prod": "NODE_ENV=production npm run build && node app/app.js",
+    "prod": "NODE_ENV=production node app/app.js && npm run build",
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js && gulp styles",
     "test": "mocha --reporter spec --timeout 5000"
   },
