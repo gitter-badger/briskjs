@@ -1,10 +1,5 @@
-import $ from 'jquery';
-import jQuery from 'jquery';
-// export for others scripts to use
-window.$ = $;
-window.jQuery = jQuery;
+import jQuery from 'jquery'
+import pjax from 'simple-pjax'
 
-//main.js
-require('./vendor')
-
-console.log('Client JS')
+// main.js
+console.log('Client JS');

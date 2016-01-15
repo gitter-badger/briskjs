@@ -1,21 +1,21 @@
-'use strict';
+var gulp        = require('gulp');
+var browserSync = require('browser-sync').create();
 
-var gulp = require('gulp'),
-    browserSync = require('browser-sync'),
-    config = require('./config')
+// create a task that ensures the `js` task is complete before
+// reloading browsers
+gulp.task('styles-watch', ['styles'], browserSync.reload);
 
-gulp.task('browser-sync', ['nodemon'], function () {
-  // for more browser-sync config options: http://www.browsersync.io/docs/options/
-  browserSync({
-    // informs browser-sync to proxy our expressjs app which would run at the following location
-    proxy: 'http://localhost:3000',
-    online: true,
-    xip: true,
-    browser: ['google-chrome']
-  });
+// use default task to launch Browsersync and watch styles
+gulp.task('serve', ['styles'], function () {
+	// Serve files from the root of this project
+    browserSync.init({
+        server: {
+            baseDir: __base
+        },
+        port: 3000
+    });
+
+    // add browserSync.reload to the tasks array to make
+    // all browsers reload after tasks are complete.
+    gulp.watch("app/styles/**/*.styl", ['styles-watch']);
 });
-
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
-
