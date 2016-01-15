@@ -1,5 +1,5 @@
-import jQuery from 'jquery'
-import pjax from 'simple-pjax'
+// Vendor plugins
+require('./vendor')
 
 // main.js
 console.log('Client JS');
