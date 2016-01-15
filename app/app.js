@@ -89,25 +89,12 @@ app.use(express.static(path.join(__dirname, '../public'), { maxAge: 31557600000 
 
 // We only want to run the asset workflow when not in production
 if (app.get('env') === 'development') {
-
-  // Compile styles with Gulp
-  var gulp = require('gulp');
-  require('../gulpfile');
-  console.log('Running Gulp...');
-  gulp.start('default');
-
-  // Compile client JS with Webpack
-  var bundle = require('../config/bundle.js');
-  bundle();
-
   // Any requests to localhost:3000/scripts are proxied to webpack-dev-server
   app.all('/scripts/*', function (req, res) {
-    proxy.web(req, res, {
-        target: 'http://localhost:8080'
-    });
+    proxy.web(req, res, { target: 'http://localhost:8080' });
   });
-
 }
+
 
 /**
  * Routes.
@@ -146,7 +133,7 @@ var gracefulShutdown = function() {
    setTimeout(function() {
     console.error("Could not close connections in time, forcefully shutting down");
     process.exit()
-  }, 10*1000);
+  }, 3000);
 }
 
 // listen for TERM signal .e.g. kill 

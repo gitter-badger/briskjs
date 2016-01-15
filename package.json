@@ -6,7 +6,7 @@
     "url": "https://github.com/sahat/hackathon-starter.git"
   },
   "scripts": {
-    "start": "node app/app.js",
+    "start": "gulp",
     "dev": "node app/app.js",
     "prod": "NODE_ENV=production node app/app.js && npm run build",
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js && gulp styles",
